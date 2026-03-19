@@ -1,0 +1,93 @@
+---
+title: AI Chat Assistant
+description: Configure and use the built-in AI chat panel powered by OpenRouter in this Fumadocs site.
+---
+
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+<Callout title="Preview First" type="info">
+The AI chat opens from the floating <strong>Ask AI</strong> button in the bottom-right corner on both home and docs pages.
+</Callout>
+
+<Cards>
+  <Card title="What It Does">
+    Answers questions about your docs, can run internal doc search, and streams responses in real time.
+  </Card>
+  <Card title="Best Query Style">
+    Ask specific questions like: "How do I use Git branching in this site docs?" for better grounded answers.
+  </Card>
+  <Card title="Important Limitation">
+    AI can be inaccurate. Always verify critical details against source docs.
+  </Card>
+</Cards>
+
+## Configuration
+
+### Required Environment Variables
+
+```bash title=".env"
+OPENROUTER_API_KEY=your_openrouter_api_key
+OPENROUTER_MODEL=minimax/minimax-m2.5:free
+OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
+```
+
+`OPENROUTER_API_KEY` is required. `OPENROUTER_MODEL` and `OPENROUTER_BASE_URL` are optional and use defaults when unset.
+
+You can place these values in either `.env` or `.env.local`. Next.js loads both automatically.
+
+For Netlify/Vercel, set the same variables in the project environment settings (do not commit secrets to git).
+
+### API Route
+
+The chat backend is served from `/api/chat` and streams responses to the UI.
+
+## Usage
+
+### Open and Ask
+
+<Steps>
+  <Step>
+    Click the floating <strong>Ask AI</strong> button in the bottom-right corner.
+  </Step>
+  <Step>
+    Type your question, then press <strong>Enter</strong> to send.
+  </Step>
+  <Step>
+    Use <strong>Shift + Enter</strong> for a new line.
+  </Step>
+  <Step>
+    Use <strong>Retry</strong> to regenerate or <strong>Clear Chat</strong> to reset.
+  </Step>
+</Steps>
+
+### Keyboard Shortcuts
+
+| Action | macOS | Windows/Linux |
+| :--- | :--- | :--- |
+| Open panel | `Cmd + /` | `Ctrl + /` |
+| Close panel | `Esc` | `Esc` |
+| Send message | `Enter` | `Enter` |
+| New line | `Shift + Enter` | `Shift + Enter` |
+
+### Internal Components
+
+```tsx
+import { AIChatWidget } from '@/components/ai/chat-widget';
+
+// docs layout
+<AIChatWidget mode="docs" />
+
+// home layout
+<AIChatWidget mode="overlay" />
+```
+
+## Troubleshooting
+
+<Callout type="warning" title="No Response or Error">
+Check that `OPENROUTER_API_KEY`, `OPENROUTER_MODEL`, and `OPENROUTER_BASE_URL` are present in `.env` or `.env.local`, then restart the dev server.
+</Callout>
+
+1. Confirm the server is running (`pnpm dev`).
+2. Open browser devtools and verify `POST /api/chat` is successful.
+3. If the API returns an error JSON, fix the missing config and retry.
+4. If answers are weak, ask a narrower query with clearer domain terms.

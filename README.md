@@ -15,6 +15,21 @@ yarn dev
 
 Open http://localhost:3000 with your browser to see the result.
 
+## Environment Variables
+
+Create a `.env` (or `.env.local`) file in the project root:
+
+```bash
+OPENROUTER_API_KEY=your_openrouter_api_key
+OPENROUTER_MODEL=minimax/minimax-m2.5:free
+OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
+```
+
+- `OPENROUTER_API_KEY` is required for `/api/chat`.
+- `OPENROUTER_MODEL` and `OPENROUTER_BASE_URL` are optional.
+
+For Vercel/Netlify deployments, configure these variables in the platform environment settings.
+
 ## Explore
 
 In the project, you can see:

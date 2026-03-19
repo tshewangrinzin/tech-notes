@@ -1,3 +1,33 @@
-@import 'tailwindcss';
-@import 'fumadocs-ui/css/neutral.css';
-@import 'fumadocs-ui/css/preset.css';
+@import "tailwindcss";
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
+
+@theme {
+  --color-fd-primary: hsl(263.4 70% 50.4%);
+  --color-fd-primary-foreground: hsl(0 0% 100%);
+}
+
+@layer utilities {
+  .fd-nav {
+    border-bottom: 1px solid
+      color-mix(in srgb, var(--color-fd-primary), transparent 90%);
+    backdrop-filter: blur(8px);
+  }
+
+  .fd-sidebar {
+    border-right: 1px solid
+      color-mix(in srgb, var(--color-fd-primary), transparent 95%);
+  }
+
+  /* Enhance links */
+  .prose a {
+    color: var(--color-fd-primary);
+    text-underline-offset: 4px;
+    transition: all 0.2s;
+  }
+
+  .prose a:hover {
+    color: color-mix(in srgb, var(--color-fd-primary), black 20%);
+    text-decoration-color: var(--color-fd-primary);
+  }
+}

@@ -1,0 +1,186 @@
+---
+title: Integrated Development Environments (IDEs)
+description: Master your development environment with this comprehensive guide to IDEs, text editors, and VS Code.
+---
+
+Welcome to the **IDE Guide**. Whether you're a beginner or a seasoned pro, choosing the right tools is the first step toward efficient coding.
+
+## What is an IDE?
+
+An **Integrated Development Environment (IDE)** is a software application that provides a comprehensive set of tools for software development. Think of it as a "digital workshop" where everything you need is within arm's reach.
+
+<Callout type="info">
+  An IDE typically combines a **code editor**, **automation tools**, and a **debugger** into a single graphical user interface.
+</Callout>
+
+### Core Components
+- **Text Editor:** Where you write your code.
+- **Compiler/Interpreter:** Translates your code into machine language.
+- **Debugger:** Helps you find and fix errors in your code.
+- **Build Automation:** Automates repetitive tasks like compiling and packaging.
+
+## Why use an IDE?
+
+IDEs aren't just for writing text; they are built for **Productivity**.
+
+<Cards>
+  <Card title="IntelliSense" description="Smart code completion, parameter info, and quick info." />
+  <Card title="Direct Debugging" description="Set breakpoints, watch variables, and step through code." />
+  <Card title="Git Integration" description="Manage version control without leaving your editor." />
+  <Card title="Refactoring" description="Safely rename variables or restructure code across files." />
+</Cards>
+
+---
+
+## IDE vs. Text Editor
+
+Choosing between an IDE and a Text Editor depends on your project's scope.
+
+| Feature | IDE | Text Editor |
+| :--- | :--- | :--- |
+| **Complexity** | High (All-in-one) | Low (Fast & Lightweight) |
+| **Features** | Built-in debugger, build tools | Basic syntax highlighting |
+| **Resources** | Uses more RAM/CPU | Very low resource usage |
+| **Best For** | Massive projects (Java, C++, Enterprise) | Quick edits, scripts, web dev |
+
+### When to use what?
+- **Use an IDE** when working on large, multi-file projects where debugging and deep library integration are crucial.
+- **Use a Text Editor** when you need to make quick changes, edit configuration files, or if you prefer a "building block" approach with plugins.
+
+---
+
+## The VS Code Powerhouse
+
+**Visual Studio Code (VS Code)** is the most popular editor today. It blurs the line between a text editor and an IDE, offering the speed of an editor with the power of an IDE via extensions.
+
+### How to Use VS Code
+<Steps>
+  ### Open a Project
+  Go to `File > Open Folder` to load your workspace.
+  ### Install Extensions
+  <Tabs items={['MacOS', 'Windows/Linux']}>
+    <Tab value="MacOS">
+      Open the Extensions view with `Cmd + Shift + X`.
+    </Tab>
+    <Tab value="Windows/Linux">
+      Open the Extensions view with `Ctrl + Shift + X`.
+    </Tab>
+  </Tabs>
+  ### Start Coding
+  Create a new file, and notice how **IntelliSense** suggests code as you type.
+  ### Run & Debug
+  <Tabs items={['MacOS', 'Windows/Linux']}>
+    <Tab value="MacOS">
+      Use the Terminal with `Ctrl + \`` or the Debug view with `Cmd + Shift + D`.
+    </Tab>
+    <Tab value="Windows/Linux">
+      Use the Terminal with `Ctrl + \`` or the Debug view with `Ctrl + Shift + D`.
+    </Tab>
+  </Tabs>
+</Steps>
+
+### UI Layout: Getting Around
+VS Code is designed for focus and flexibility.
+
+- **Activity Bar (Far Left):** Switch between Explorer, Search, Git, and Debugging.
+- **Sidebar (Left):** Displays your files or search results.
+- **Editor Area (Center):** Where the magic happens. You can split this into multiple columns.
+- **Panel (Bottom):** Houses the **Integrated Terminal**, Output, and Problems console.
+- **AI Section (Right/Sidebar):** Modern setups (like Cursor or Copilot) often place a chat interface on the right for instant AI assistance.
+- **Status Bar (Bottom Edge):** Shows current branch, line/column, and encoding.
+
+### Common Shortcuts Reference
+
+<Tabs items={['MacOS', 'Windows/Linux']}>
+  <Tab value="MacOS">
+    | Action | Shortcut |
+    | :--- | :--- |
+    | **Command Palette** | `Cmd + Shift + P` |
+    | **Quick Open File** | `Cmd + P` |
+    | **Global Search** | `Cmd + Shift + F` |
+    | **Toggle Sidebar** | `Cmd + B` |
+    | **New Terminal** | `Ctrl + Shift + \`` |
+  </Tab>
+  <Tab value="Windows/Linux">
+    | Action | Shortcut |
+    | :--- | :--- |
+    | **Command Palette** | `Ctrl + Shift + P` |
+    | **Quick Open File** | `Ctrl + P` |
+    | **Global Search** | `Ctrl + Shift + F` |
+    | **Toggle Sidebar** | `Ctrl + B` |
+    | **New Terminal** | `Ctrl + Shift + \`` |
+  </Tab>
+</Tabs>
+
+---
+
+## Extensions & Customization
+
+The power of VS Code lies in its **Marketplace**. You can transform it from a simple JS editor into a full-blown AI-powered workstation.
+
+<Callout type="tip">
+  Use `settings.json` for advanced customization, or search for "Themes" in the marketplace to change the visual look.
+</Callout>
+
+### Top Extension Categories:
+1. **Linter & Formatters:** Prettier, ESLint.
+2. **Themes:** One Dark Pro, Dracula, Night Owl.
+3. **Productivity:** GitLens, Peacock, Live Server.
+
+---
+
+## AI IDEs: The New Frontier
+
+The latest trend in software development is the **AI-First IDE**. These tools integrate Large Language Models (LLMs) directly into the core editing experience.
+
+<Cards>
+  <Card 
+    title="Cursor" 
+    href="https://cursor.com" 
+    description="A fork of VS Code with AI baked into every feature. The gold standard for AI coding." 
+  />
+  <Card 
+    title="Zed" 
+    href="https://zed.dev" 
+    description="A high-performance, Rust-based editor with built-in AI capabilities." 
+  />
+  <Card 
+    title="Windsurf" 
+    href="https://codeium.com/windsurf" 
+    description="The world's first agentic IDE, capable of managing complex tasks." 
+  />
+</Cards>
+
+### Why AI IDEs?
+Everything is **Context Aware**. The AI understands your entire codebase, not just the file you are looking at. It can predict your next move, write unit tests, and even fix bugs autonomously.
+
+---
+
+## Common Examples
+
+Here are some popular tools used by developers worldwide:
+
+**IDEs:**
+- **IntelliJ IDEA:** The titan for Java development.
+- **Visual Studio:** Heavyweight for C# and .NET.
+- **Xcode:** The only way to build for Apple platforms.
+- **PyCharm:** Specially tuned for Python and Data Science.
+
+**Text Editors & Forks:**
+- **Sublime Text:** Lightning fast and elegant.
+- **Vim/Neovim:** Keyboard-only terminal power.
+- **VSCodium:** A telemetry-free, purely open-source version of VS Code.
+
+---
+
+## Built-In AI Chat
+
+Need help while reading this documentation? Use the integrated bottom-right chat panel.
+
+<Cards>
+  <Card
+    title="AI Chat Assistant Guide"
+    href="/docs/ai-chat-assistant"
+    description="Setup, shortcuts, usage patterns, and troubleshooting for the integrated Ask AI panel."
+  />
+</Cards>

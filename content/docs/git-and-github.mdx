@@ -1,0 +1,421 @@
+---
+title: Git & GitHub
+description: A comprehensive guide to version control with Git and collaboration on GitHub.
+---
+
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+<Callout title="TL;DR">
+- **Git:** A distributed version control system that tracks changes and enables safe collaboration.
+- **GitHub:** A hosted platform for Git repos + collaboration tools (PRs, Issues, Actions).
+- **Core Flow:** Branch -> Commit -> Push -> Pull Request -> Review -> Merge.
+- **Power Move:** Use forks for open source, branches for features, and PRs for clean reviews.
+</Callout>
+
+## Meaning & Purpose
+
+<Cards>
+  <Card title="Git (Meaning)">
+    **Git** is a distributed version control system that records snapshots of your project so you can track changes, roll back safely, and collaborate without overwriting others.
+
+    - Keep history of every change
+    - Work offline with full project history
+    - Resolve conflicts with confidence
+  </Card>
+  <Card title="GitHub (Meaning)">
+    **GitHub** is a cloud platform that hosts Git repositories and adds collaboration features like pull requests, issues, code review, and automation.
+
+    - Share code with teams or the public
+    - Review changes with PRs
+    - Automate tests & deployments
+  </Card>
+</Cards>
+
+---
+
+## Use Cases (When & Why)
+
+<Cards>
+  <Card title="Solo Developer">
+    Track versions, experiment with branches, and revert mistakes safely.
+  </Card>
+  <Card title="Team Collaboration">
+    Everyone works on their own branches, submits PRs, and merges only reviewed code.
+  </Card>
+  <Card title="Open Source">
+    Fork a project, contribute via PRs, and sync your fork with upstream changes.
+  </Card>
+  <Card title="Backup & History">
+    Even if your laptop crashes, your repo and full history live on GitHub.
+  </Card>
+</Cards>
+
+---
+
+## Git vs GitHub (Quick Comparison)
+
+### Git
+- Version control system
+- Runs locally on your machine
+- Manages commits, branches, merges
+- Works offline
+
+### GitHub
+- Hosted platform for Git repositories
+- Adds collaboration features
+- Pull requests, code review, issues
+- CI/CD and automation
+
+---
+
+## Core Git Commands (Syntax + Examples)
+
+<Cards>
+  <Card title="git init">
+    Syntax: `git init`
+    Example: `git init`
+    
+    Start a new Git repository in the current folder.
+  </Card>
+  <Card title="git clone">
+    Syntax: `git clone <url>`
+    Example: `git clone https://github.com/user/repo.git`
+    
+    Download a remote repository to your machine.
+  </Card>
+  <Card title="git status">
+    Syntax: `git status`
+    Example: `git status`
+    
+    See modified files and current branch state.
+  </Card>
+  <Card title="git add">
+    Syntax: `git add <file|folder>`
+    Example: `git add src/`
+    
+    Stage changes so they can be committed.
+  </Card>
+  <Card title="git commit">
+    Syntax: `git commit -m "message"`
+    Example: `git commit -m "Add login page"`
+    
+    Save a snapshot of staged changes.
+  </Card>
+  <Card title="git log">
+    Syntax: `git log`
+    Example: `git log --oneline --graph`
+    
+    Show commit history in detail or compact form.
+  </Card>
+  <Card title="git diff">
+    Syntax: `git diff`
+    Example: `git diff HEAD~1`
+    
+    View changes between commits or working tree.
+  </Card>
+  <Card title="git branch">
+    Syntax: `git branch <name>`
+    Example: `git branch feature/auth`
+    
+    Create or list branches.
+  </Card>
+  <Card title="git switch">
+    Syntax: `git switch <name>`
+    Example: `git switch feature/auth`
+    
+    Move to another branch (newer alternative to checkout).
+  </Card>
+  <Card title="git merge">
+    Syntax: `git merge <branch>`
+    Example: `git merge feature/auth`
+    
+    Combine changes from another branch into current.
+  </Card>
+  <Card title="git pull">
+    Syntax: `git pull`
+    Example: `git pull origin main`
+    
+    Fetch + merge changes from a remote branch.
+  </Card>
+  <Card title="git push">
+    Syntax: `git push <remote> <branch>`
+    Example: `git push origin main`
+    
+    Upload your local commits to a remote repository.
+  </Card>
+</Cards>
+
+---
+
+## GitHub CLI Commands (Syntax + Examples)
+
+<Cards>
+  <Card title="gh auth login">
+    Syntax: `gh auth login`
+    Example: `gh auth login`
+    
+    Authenticate the GitHub CLI with your account.
+  </Card>
+  <Card title="gh repo create">
+    Syntax: `gh repo create <name> [flags]`
+    Example: `gh repo create notes --public --source=. --push`
+    
+    Create a GitHub repo and optionally push local code.
+  </Card>
+  <Card title="gh repo fork">
+    Syntax: `gh repo fork <repo> [flags]`
+    Example: `gh repo fork owner/project --clone`
+    
+    Fork a repo to your account and optionally clone it.
+  </Card>
+  <Card title="gh repo sync">
+    Syntax: `gh repo sync <repo> [flags]`
+    Example: `gh repo sync myuser/project-fork -b main`
+    
+    Sync your fork with the upstream repository.
+  </Card>
+  <Card title="gh pr create">
+    Syntax: `gh pr create [flags]`
+    Example: `gh pr create --title "Fix nav" --body "Updates links"`
+    
+    Create a pull request from your current branch.
+  </Card>
+  <Card title="gh pr merge">
+    Syntax: `gh pr merge <number> [flags]`
+    Example: `gh pr merge 42 --squash --delete-branch`
+    
+    Merge a PR with a chosen merge strategy.
+  </Card>
+</Cards>
+
+---
+
+## GitHub Features & How to Use Them
+
+### Forking
+Create your own copy of someone else's repo.
+
+**Web UI Steps**
+1. Open the repo on GitHub.
+2. Click *Fork* (top-right).
+3. Choose your account and create the fork.
+
+**CLI Steps**
+1. `gh repo fork owner/project --clone`
+2. Start working in the cloned fork.
+
+### Branching
+Isolate work in a separate line of development.
+
+**CLI Steps**
+1. `git branch feature/login`
+2. `git switch feature/login`
+
+**Web UI Steps**
+1. In GitHub, open the branch dropdown.
+2. Type a new branch name, press Enter.
+
+### Pull Requests (PRs)
+Request review before merging changes.
+
+**CLI Steps**
+1. `git push origin feature/login`
+2. `gh pr create --title "Add login" --body "Implements auth UI"`
+
+**Web UI Steps**
+1. Click *Compare & pull request*.
+2. Add title/description, click *Create PR*.
+
+### Merging
+Combine PR changes into the target branch.
+
+**CLI Steps**
+1. `gh pr merge 42 --squash`
+2. `git pull origin main`
+
+**Web UI Steps**
+1. Open the PR.
+2. Click *Merge pull request*.
+
+### Collaboration
+Work together with reviews, issues, and teams.
+
+**Best Practice**
+1. Use feature branches for new work.
+2. Require PR reviews before merging.
+3. Keep `main` stable and protected.
+
+### Syncing a Fork
+Bring updates from the original repo into your fork.
+
+**CLI Steps**
+1. `gh repo sync myuser/project-fork -b main`
+2. `git pull` in your local fork if needed.
+
+**Web UI Steps**
+1. Open your fork on GitHub.
+2. Click *Sync fork* -> *Update branch*.
+
+---
+
+## .gitignore (What & Why)
+
+<Card title=".gitignore">
+**.gitignore** is a file that tells Git which files or folders to ignore, so you don't accidentally commit build output, secrets, or local config.
+</Card>
+
+**Example .gitignore**
+
+```text
+node_modules/
+.env
+.DS_Store
+/dist
+```
+
+**Common Patterns**
+- `folder/` ignores a directory
+- `*.log` ignores all .log files
+- `!important.log` re-includes a file
+
+---
+
+## Detailed Workflow 1: New Project -> GitHub
+
+<Steps>
+<Step title="Initialize Git">
+```bash
+git init
+```
+Create a new Git repository locally.
+</Step>
+<Step title="Add Files">
+```bash
+git add .
+```
+Stage all files for commit.
+</Step>
+<Step title="Commit">
+```bash
+git commit -m "Initial commit"
+```
+Save the first snapshot.
+</Step>
+<Step title="Create GitHub Repo">
+```bash
+gh repo create my-project --public --source=. --push
+```
+Creates the remote repo and pushes your code.
+</Step>
+<Step title="Verify">
+Open GitHub and confirm the files appear.
+</Step>
+</Steps>
+
+---
+
+## Detailed Workflow 2: Fork -> Branch -> PR -> Merge -> Sync
+
+<Steps>
+<Step title="Fork & Clone">
+```bash
+gh repo fork owner/project --clone
+```
+Creates your fork and downloads it locally.
+</Step>
+<Step title="Create Feature Branch">
+```bash
+git switch -c fix/typo
+```
+Work in a clean, isolated branch.
+</Step>
+<Step title="Commit Changes">
+```bash
+git add .
+git commit -m "Fix typo"
+```
+Save your update.
+</Step>
+<Step title="Push & PR">
+```bash
+git push origin fix/typo
+gh pr create --title "Fix typo" --body "Small text correction"
+```
+Submit your changes for review.
+</Step>
+<Step title="Merge (Maintainer)">
+```bash
+gh pr merge 123 --squash
+```
+Merge after review or approvals.
+</Step>
+<Step title="Sync Your Fork">
+```bash
+gh repo sync myuser/project -b main
+```
+Bring upstream changes back into your fork.
+</Step>
+</Steps>
+
+---
+
+## Other Git Hosting Platforms
+
+<Cards>
+  <Card title="GitLab">
+    All-in-one DevOps platform with Git hosting.
+  </Card>
+  <Card title="Bitbucket">
+    Git hosting with deep Atlassian integration.
+  </Card>
+  <Card title="Azure DevOps">
+    Microsoft's repo + CI/CD + boards suite.
+  </Card>
+  <Card title="SourceHut">
+    Minimalist, developer-focused Git hosting.
+  </Card>
+  <Card title="Gitea">
+    Lightweight self-hosted Git service.
+  </Card>
+  <Card title="Forgejo">
+    Community-driven fork of Gitea.
+  </Card>
+</Cards>
+
+---
+
+## Sources (Official Docs)
+
+- [Git overview](https://git-scm.com/about)
+- [Git commands](https://git-scm.com/docs)
+- [gitignore](https://git-scm.com/docs/gitignore)
+- [GitHub basics](https://docs.github.com/en/get-started/start-your-journey/about-github-and-git)
+- [Branches](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-branches-in-your-repository/about-branches)
+- [Pull request merges](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/about-pull-request-merges)
+- [Syncing forks](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork)
+- [GitHub CLI manual](https://cli.github.com/manual/)
+- [Alternatives: GitLab, Bitbucket, Azure DevOps, SourceHut, Gitea, Forgejo](https://forgejo.org/)
+
+---
+
+## Key Takeaways
+
+<Callout type="info">
+- Git manages history; GitHub manages collaboration.
+- Branches isolate work, PRs review it, merges finalize it.
+- Forks power open source contributions and safe experimentation.
+</Callout>
+
+---
+
+## External Resources & Deep Dives
+
+Looking to master Git and GitHub? Explore these highly recommended external resources:
+
+- [GitHub Official Getting Started Guide](https://docs.github.com/en/get-started) - The primary source for all things GitHub.
+- [Pro Git Book](https://git-scm.com/book/en/v2) - The ultimate, free, and comprehensive book on Git.
+- [Learn Git Branching](https://learngitbranching.js.org/) - A highly visual and interactive tutorial for understanding Git branches and merges.
+- [GitHub Cheat Sheet](https://training.github.com/) - A handy reference guide for Git commands.
+- [Atlassian Git Tutorials](https://www.atlassian.com/git/tutorials) - Excellent step-by-step guides covering advanced Git workflows.
+
+

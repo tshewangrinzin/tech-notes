@@ -1,0 +1,201 @@
+---
+title: Fork, Pull Request & Merge
+description: A comprehensive step-by-step guide to forking a repository, creating a pull request, and merging changes on GitHub.
+---
+
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+In this guide, you'll learn how to contribute to a project by forking it, making changes, and submitting a pull request to merge those changes back into the original repository.
+
+<Callout title="Why Fork & PR?">
+Forking allows you to freely experiment with changes without affecting the original project. Pull Requests (PRs) are the bridge that lets you propose those changes for review and eventual merging into the main project.
+</Callout>
+
+---
+
+## Phase 1: Forking the Repository
+
+Forking creates a personal copy of someone else's project in your own GitHub account.
+
+<Steps>
+<Step title="Click on Fork">
+Navigate to the original repository on GitHub and click the **Fork** button located in the top-right corner of the page.
+
+![Step 1 screenshot](https://images.tango.us/workflows/a75ac8c6-a6e5-49e7-bcb6-3491ce6701a2/steps/54ef6cc0-8329-4592-9669-644f91388267/00a93127-ad84-47e0-9cc0-de377d3fe1b6.png?mark-x=1502&mark-y=224&m64=aHR0cHM6Ly9pbWFnZXMudGFuZ28udXMvc3RhdGljL2JsYW5rLnBuZz9tYXNrPWNvcm5lcnMmYm9yZGVyPTQlMkNGRjc0NDImdz0yMTgmaD03MiZmaXQ9Y3JvcCZjb3JuZXItcmFkaXVzPTEw)
+</Step>
+
+<Step title="Choose an Owner">
+Select your own GitHub account or an organization where you want the fork to be created.
+
+![Step 2 screenshot](https://images.tango.us/workflows/a75ac8c6-a6e5-49e7-bcb6-3491ce6701a2/steps/161031ff-8ca3-4aa4-9a57-ed049a469de4/ac15103d-186d-4f39-93b9-fa2b68b3c00c.png?mark-x=354&mark-y=586&m64=aHR0cHM6Ly9pbWFnZXMudGFuZ28udXMvc3RhdGljL2JsYW5rLnBuZz9tYXNrPWNvcm5lcnMmYm9yZGVyPTQlMkNGRjc0NDImdz0zMzYmaD04MCZmaXQ9Y3JvcCZjb3JuZXItcmFkaXVzPTEw)
+</Step>
+
+<Step title="Select Workspace">
+If you are part of multiple organizations, ensure you select the correct one (e.g., `tech-dti`).
+
+![Step 3 screenshot](https://images.tango.us/workflows/a75ac8c6-a6e5-49e7-bcb6-3491ce6701a2/steps/c99196a5-fe0a-413d-a6d4-6e225a52e242/215d0872-00ea-4bb1-ad0a-2cebc8d08af3.png?mark-x=370&mark-y=940&m64=aHR0cHM6Ly9pbWFnZXMudGFuZ28udXMvc3RhdGljL2JsYW5rLnBuZz9tYXNrPWNvcm5lcnMmYm9yZGVyPTQlMkNGRjc0NDImdz00OTYmaD04MCZmaXQ9Y3JvcCZjb3JuZXItcmFkaXVzPTEw)
+</Step>
+
+<Step title="Name Your Fork">
+You can keep the original name or give it a new one. Type a name if you wish to change it.
+
+![Step 4 screenshot](https://images.tango.us/workflows/a75ac8c6-a6e5-49e7-bcb6-3491ce6701a2/steps/1bac27e9-1be7-46e6-97de-83962ec3f766/686cbddd-01b1-4ea8-9fac-5c561aa914c7.png?mark-x=656&mark-y=588&m64=aHR0cHM6Ly9pbWFnZXMudGFuZ28udXMvc3RhdGljL2JsYW5rLnBuZz9tYXNrPWNvcm5lcnMmYm9yZGVyPTQlMkNGRjc0NDImdz0zNzYmaD03NiZmaXQ9Y3JvcCZjb3JuZXItcmFkaXVzPTEw)
+</Step>
+
+<Step title="Create Fork">
+Click the **Create fork** button. GitHub will now copy the repository to your account.
+
+![Step 5 screenshot](https://images.tango.us/workflows/a75ac8c6-a6e5-49e7-bcb6-3491ce6701a2/steps/f0a2dd61-d83a-4881-b322-f4c6a974db25/dda68dd6-9557-4492-b98a-b691eed54945.png?mark-x=1562&mark-y=1302&m64=aHR0cHM6Ly9pbWFnZXMudGFuZ28udXMvc3RhdGljL2JsYW5rLnBuZz9tYXNrPWNvcm5lcnMmYm9yZGVyPTQlMkNGRjc0NDImdz0yMTYmaD04MCZmaXQ9Y3JvcCZjb3JuZXItcmFkaXVzPTEw)
+</Step>
+</Steps>
+
+---
+
+## Phase 2: Making Changes
+
+Once you have your own fork, you can make changes directly through the GitHub Web UI (or locally on your machine).
+
+<Steps>
+<Step title="Open Target File">
+In your forked repository, click on the file you want to edit (e.g., `README.md`).
+
+![Step 6 screenshot](https://images.tango.us/workflows/a75ac8c6-a6e5-49e7-bcb6-3491ce6701a2/steps/1e2fa377-b11a-4865-a6a6-37548c2ee2ed/60bdb1ac-6d3f-4ed5-bb32-cc684ea2ebbb.png?mark-x=142&mark-y=1156&m64=aHR0cHM6Ly9pbWFnZXMudGFuZ28udXMvc3RhdGljL2JsYW5rLnBuZz9tYXNrPWNvcm5lcnMmYm9yZGVyPTQlMkNGRjc0NDImdz0xNzgmaD01MCZmaXQ9Y3JvcCZjb3JuZXItcmFkaXVzPTEw)
+</Step>
+
+<Step title="Enter Edit Mode">
+Click on the **Edit this file** (pencil icon) to start making changes.
+
+![Step 7 screenshot](https://images.tango.us/workflows/a75ac8c6-a6e5-49e7-bcb6-3491ce6701a2/steps/d1599eb2-769d-4645-ba18-ece4ff737f06/9c1c3124-4d80-41db-90b9-debb7df776af.png?mark-x=1966&mark-y=462&m64=aHR0cHM6Ly9pbWFnZXMudGFuZ28udXMvc3RhdGljL2JsYW5rLnBuZz9tYXNrPWNvcm5lcnMmYm9yZGVyPTQlMkNGRjc0NDImdz03MiZoPTcyJmZpdD1jcm9wJmNvcm5lci1yYWRpdXM9MTA%3D)
+</Step>
+
+<Step title="Apply Modifications">
+Type your changes into the editor. For example, add a new label or update documentation text.
+
+![Step 8 screenshot](https://images.tango.us/workflows/a75ac8c6-a6e5-49e7-bcb6-3491ce6701a2/steps/7acdd1a5-608e-4fad-81a9-ebd46fe2a7da/220d1664-979e-478d-a19b-829e6a852e6e.png?mark-x=746&mark-y=464&m64=aHR0cHM6Ly9pbWFnZXMudGFuZ28udXMvc3RhdGljL2JsYW5rLnBuZz9tYXNrPWNvcm5lcnMmYm9yZGVyPTQlMkNGRjc0NDImdz0xMzYwJmg9MTMxMiZmaXQ9Y3JvcCZjb3JuZXItcmFkaXVzPTEw)
+</Step>
+
+<Step title="Initiate Commit">
+Click on **Commit changes...** at the top right to start the save process.
+
+![Step 9 screenshot](https://images.tango.us/workflows/a75ac8c6-a6e5-49e7-bcb6-3491ce6701a2/steps/239e51c7-2d83-442d-a65c-50b0d1d87907/c11791af-af10-45a6-b1b9-163fec675a78.png?mark-x=1792&mark-y=248&m64=aHR0cHM6Ly9pbWFnZXMudGFuZ28udXMvc3RhdGljL2JsYW5rLnBuZz9tYXNrPWNvcm5lcnMmYm9yZGVyPTQlMkNGRjc0NDImdz0zMTYmaD04MCZmaXQ9Y3JvcCZjb3JuZXItcmFkaXVzPTEw)
+</Step>
+
+<Step title="Confirm Commit">
+Provide a brief commit message describing your changes and click **Commit changes**.
+
+![Step 10 screenshot](https://images.tango.us/workflows/a75ac8c6-a6e5-49e7-bcb6-3491ce6701a2/steps/6d8669fe-b72e-466b-afcd-5196bb0c8d14/8d3bcfe2-aabf-4c7d-bd0e-023892212341.png?mark-x=1232&mark-y=1310&m64=aHR0cHM6Ly9pbWFnZXMudGFuZ28udXMvc3RhdGljL2JsYW5rLnBuZz9tYXNrPWNvcm5lcnMmYm9yZGVyPTQlMkNGRjc0NDImdz0yOTAmaD04MCZmaXQ9Y3JvcCZjb3JuZXItcmFkaXVzPTEw)
+</Step>
+</Steps>
+
+### Alternative: Making Changes Locally
+
+If you prefer working on your own machine, you can clone your forked repository and make changes locally.
+
+<Steps>
+<Step title="Clone Your Fork">
+Copy the SSH or HTTPS URL of your forked repository and run the following command in your terminal:
+
+```bash
+git clone https://github.com/your-username/repository-name.git
+```
+</Step>
+
+<Step title="Navigate & Edit">
+Go into the project folder and open the file you want to change (e.g., `README.md`) in your favorite editor.
+
+```bash
+cd repository-name
+# Open README.md and make your changes
+```
+</Step>
+
+<Step title="Stage & Commit">
+Once you've made your changes, stage them and create a commit.
+
+```bash
+git add .
+git commit -m "commit message"
+```
+</Step>
+
+<Step title="Push to GitHub">
+Push your local changes back to your forked repository on GitHub.
+
+```bash
+git push origin main
+```
+</Step>
+</Steps>
+
+<Callout title="Next Step">
+After pushing your changes locally, you can proceed to **Phase 3** to create a Pull Request on GitHub.
+</Callout>
+
+
+---
+
+## Phase 3: Creating a Pull Request
+
+After committing your changes to your fork, it's time to propose them to the original project.
+
+<Steps>
+<Step title="Return to Repository Root">
+Click on the **Code** tab to go back to the main view of your forked repository.
+
+![Step 11 screenshot](https://images.tango.us/workflows/a75ac8c6-a6e5-49e7-bcb6-3491ce6701a2/steps/46a6a59d-8f9f-463a-9bdb-d0ea1610bdce/3e214534-c0e5-4fd3-a4a0-a13abb19e364.png?mark-x=24&mark-y=112&m64=aHR0cHM6Ly9pbWFnZXMudGFuZ28udXMvc3RhdGljL2JsYW5rLnBuZz9tYXNrPWNvcm5lcnMmYm9yZGVyPTQlMkNGRjc0NDImdz0xNjYmaD04MiZmaXQ9Y3JvcCZjb3JuZXItcmFkaXVzPTEw)
+</Step>
+
+<Step title="Open Contribute Dropdown">
+Click the **Contribute** button to see options for syncing or contributing.
+
+![Step 12 screenshot](https://images.tango.us/workflows/a75ac8c6-a6e5-49e7-bcb6-3491ce6701a2/steps/dde0ff1d-68e1-4482-8bae-f4da3f95435e/2e5a9484-59f7-4c08-964c-4caa89c887d5.png?mark-x=90&mark-y=584&m64=aHR0cHM6Ly9pbWFnZXMudGFuZ28udXMvc3RhdGljL2JsYW5rLnBuZz9tYXNrPWNvcm5lcnMmYm9yZGVyPTQlMkNGRjc0NDImdz0zMDQmaD04MCZmaXQ9Y3JvcCZjb3JuZXItcmFkaXVzPTEw)
+</Step>
+
+<Step title="Open Pull Request">
+Click on **Open pull request**. This will take you to the original repository's PR creation page.
+
+![Step 13 screenshot](https://images.tango.us/workflows/a75ac8c6-a6e5-49e7-bcb6-3491ce6701a2/steps/95e1bed0-50c6-4938-b76e-67b7b9597bff/0dd63e17-8737-498a-a929-925729eb94b0.png?mark-x=122&mark-y=878&m64=aHR0cHM6Ly9pbWFnZXMudGFuZ28udXMvc3RhdGljL2JsYW5rLnBuZz9tYXNrPWNvcm5lcnMmYm9yZGVyPTQlMkNGRjc0NDImdz05OTQmaD04MCZmaXQ9Y3JvcCZjb3JuZXItcmFkaXVzPTEw)
+</Step>
+
+<Step title="Describe Your Changes">
+Type a meaningful title and description for your pull request (e.g., "updated readme file").
+
+![Step 14 screenshot](https://images.tango.us/workflows/a75ac8c6-a6e5-49e7-bcb6-3491ce6701a2/steps/3123e242-ba63-458e-97b8-9b61cd1fafb9/c49e8085-cca4-450f-aaa0-561af2a3001a.png?mark-x=188&mark-y=960&m64=aHR0cHM6Ly9pbWFnZXMudGFuZ28udXMvc3RhdGljL2JsYW5rLnBuZz9tYXNrPWNvcm5lcnMmYm9yZGVyPTQlMkNGRjc0NDImdz0xMjI4Jmg9NTE2JmZpdD1jcm9wJmNvcm5lci1yYWRpdXM9MTA%3D)
+</Step>
+
+<Step title="Finalize Request">
+Click on **Create pull request**. The maintainers of the original repository will now see your proposal.
+
+![Step 15 screenshot](https://images.tango.us/workflows/a75ac8c6-a6e5-49e7-bcb6-3491ce6701a2/steps/852a7135-2ca5-418c-8c40-d83736edb4b2/a0e8f06a-c752-43d8-8220-d47257e81126.png?mark-x=1018&mark-y=1568&m64=aHR0cHM6Ly9pbWFnZXMudGFuZ28udXMvc3RhdGljL2JsYW5rLnBuZz9tYXNrPWNvcm5lcnMmYm9yZGVyPTQlMkNGRjc0NDImdz0zMzQmaD04MCZmaXQ9Y3JvcCZjb3JuZXItcmFkaXVzPTEw)
+</Step>
+</Steps>
+
+---
+
+## Phase 4: Merging the Pull Request
+
+Once the pull request is approved, it can be merged into the target branch.
+
+<Steps>
+<Step title="Initiate Merge">
+As a maintainer (or if you have permissions), click the **Merge pull request** button.
+
+![Step 16 screenshot](https://images.tango.us/workflows/a75ac8c6-a6e5-49e7-bcb6-3491ce6701a2/steps/d261b65e-eefb-4e37-9aee-1e02f4cacd8f/e40625c9-3794-4719-b7a3-52feb4c28353.png?mark-x=234&mark-y=762&m64=aHR0cHM6Ly9pbWFnZXMudGFuZ28udXMvc3RhdGljL2JsYW5rLnBuZz9tYXNrPWNvcm5lcnMmYm9yZGVyPTQlMkNGRjc0NDImdz0zMTYmaD04MCZmaXQ9Y3JvcCZjb3JuZXItcmFkaXVzPTEw)
+</Step>
+
+<Step title="Add Final Details">
+You can add an extended description or notes for the merge if necessary.
+
+![Step 17 screenshot](https://images.tango.us/workflows/a75ac8c6-a6e5-49e7-bcb6-3491ce6701a2/steps/f91d40fa-b10b-4701-b8b6-5e1529e2015e/f62c6c3d-544e-4d08-a797-b316c92c1099.png?mark-x=236&mark-y=960&m64=aHR0cHM6Ly9pbWFnZXMudGFuZ28udXMvc3RhdGljL2JsYW5rLnBuZz9tYXNrPWNvcm5lcnMmYm9yZGVyPTQlMkNGRjc0NDImdz0xMTMyJmg9MzQ0JmZpdD1jcm9wJmNvcm5lci1yYWRpdXM9MTA%3D)
+</Step>
+
+<Step title="Confirm & Finalize">
+Click **Confirm merge**. GitHub will now integrate the changes from your pull request into the project.
+
+![Step 18 screenshot](https://images.tango.us/workflows/a75ac8c6-a6e5-49e7-bcb6-3491ce6701a2/steps/e873d3a2-842e-4876-bd6e-46fb03095bed/0b81aaa2-1b00-441b-8c81-290d090ebcb0.png?mark-x=234&mark-y=1396&m64=aHR0cHM6Ly9pbWFnZXMudGFuZ28udXMvc3RhdGljL2JsYW5rLnBuZz9tYXNrPWNvcm5lcnMmYm9yZGVyPTQlMkNGRjc0NDImdz0yNjYmaD04MCZmaXQ9Y3JvcCZjb3JuZXItcmFkaXVzPTEw)
+</Step>
+</Steps>
+
+<Callout type="info" title="Success!">
+Your changes are now part of the main project. Don't forget to sync your fork with the upstream repository periodically to stay up to date!
+</Callout>
