@@ -13,8 +13,8 @@ A modern, comprehensive documentation site for Computer Science, Web Development
 
 1.  **Clone the repository**:
     ```bash
-    git clone https://github.com/tshewangrinzin/fuma-docs-note.git
-    cd fuma-docs-note
+    git clone https://github.com/tshewangrinzin/tech-notes.git
+    cd tech-notes
     ```
 
 2.  **Install dependencies**:
