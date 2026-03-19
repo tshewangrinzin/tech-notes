@@ -1,23 +1,60 @@
-# .
+# Technology Notes
 
-This is a Next.js application generated with
-[Create Fumadocs](https://github.com/fuma-nama/fumadocs).
+A modern, comprehensive documentation site for Computer Science, Web Development, and Emerging Technologies. Built with [Fumadocs](https://fumadocs.dev) and [Next.js](https://nextjs.org).
 
-Run development server:
+## 🚀 Getting Started
 
-```bash
-npm run dev
-# or
-pnpm dev
-# or
-yarn dev
-```
+### Prerequisites
 
-Open http://localhost:3000 with your browser to see the result.
+- [Node.js](https://nodejs.org/) (v18 or higher)
+- [pnpm](https://pnpm.io/) (recommended) or npm/yarn
 
-## Environment Variables
+### local Development
 
-Create a `.env` (or `.env.local`) file in the project root:
+1.  **Clone the repository**:
+    ```bash
+    git clone https://github.com/tshewangrinzin/fuma-docs-note.git
+    cd fuma-docs-note
+    ```
+
+2.  **Install dependencies**:
+    ```bash
+    pnpm install
+    ```
+
+3.  **Run development server**:
+    ```bash
+    pnpm dev
+    ```
+
+4.  **Open the site**:
+    Navigate to [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
+- **Documentation**: [Fumadocs](https://fumadocs.dev)
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **AI Integration**: [Vercel AI SDK](https://sdk.vercel.ai/) with [OpenRouter](https://openrouter.ai/)
+- **Linting & Formatting**: [Biome](https://biomejs.dev/)
+
+## 📚 Key Topics Covered
+
+The documentation covers a wide range of technical subjects, including:
+
+- **Terminal**: Master the command line basics and advanced workflows.
+- **Git & GitHub**: Effective version control and collaboration.
+- **IDEs**: Setting up and optimizing your development environment.
+- **Computer Science Fundamentals**: Number systems, data representation, memory management, and algorithms.
+- **Web Development**: JavaScript, SQL, Database Management, and Web Integration.
+- **Emerging Tech**: AI, Robotics, and Cybersecurity.
+
+## 💬 AI Chat Assistant
+
+This project includes an integrated AI Chat Assistant to help you navigate and understand the documentation. To enable it locally, configure the following environment variables:
+
+Create a `.env.local` file in the project root:
 
 ```bash
 OPENROUTER_API_KEY=your_openrouter_api_key
@@ -25,36 +62,13 @@ OPENROUTER_MODEL=minimax/minimax-m2.5:free
 OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
 ```
 
-- `OPENROUTER_API_KEY` is required for `/api/chat`.
-- `OPENROUTER_MODEL` and `OPENROUTER_BASE_URL` are optional.
+## 📂 Project Structure
 
-For Vercel/Netlify deployments, configure these variables in the platform environment settings.
+- `content/docs`: Markdown/MDX files for the documentation.
+- `app/api/chat`: Route handler for the AI Chat Assistant.
+- `components`: Custom UI components used across the site.
+- `lib`: Shared utilities and data fetching logic.
 
-## Explore
+## 📄 License
 
-In the project, you can see:
-
-- `lib/source.ts`: Code for content source adapter, [`loader()`](https://fumadocs.dev/docs/headless/source-api) provides the interface to access your content.
-- `lib/layout.shared.tsx`: Shared options for layouts, optional but preferred to keep.
-
-| Route                     | Description                                            |
-| ------------------------- | ------------------------------------------------------ |
-| `app/(home)`              | The route group for your landing page and other pages. |
-| `app/docs`                | The documentation layout and pages.                    |
-| `app/api/search/route.ts` | The Route Handler for search.                          |
-
-### Fumadocs MDX
-
-A `source.config.ts` config file has been included, you can customise different options like frontmatter schema.
-
-Read the [Introduction](https://fumadocs.dev/docs/mdx) for further details.
-
-## Learn More
-
-To learn more about Next.js and Fumadocs, take a look at the following
-resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js
-  features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [Fumadocs](https://fumadocs.dev) - learn about Fumadocs
+This project is licensed under the MIT License.

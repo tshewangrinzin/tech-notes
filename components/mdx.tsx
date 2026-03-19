@@ -12,6 +12,7 @@ export function getMDXComponents(components?: MDXComponents) {
     img: (props) => (
       <ImageZoom
         {...(props as any)}
+        unoptimized
       />
     ),
     Steps,
