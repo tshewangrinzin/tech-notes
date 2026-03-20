@@ -1,0 +1,280 @@
+---
+title: Database
+description: A comprehensive guide to databases, including comparisons with traditional file systems and object storage.
+---
+
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+<Callout title="TL;DR">
+- **Database:** An organized collection of structured data managed by a DBMS — think of it like a super-powered, intelligent spreadsheet.
+- **Why DB?** Far superior to plain files for scale, speed, data integrity, and multiple users.
+- **SQL vs. NoSQL:** Strict tables with rows & columns (SQL) vs. flexible structures like JSON documents (NoSQL).
+- **Object Storage (S3):** Best for bulk files like images or videos; DBs handle structured, queryable, transactional data.
+</Callout>
+
+## 1. What is a Database?
+
+A **database** is an organized collection of structured information stored electronically. Think of it like a super-powered, intelligent spreadsheet — one that can store millions of records, find anything in milliseconds, and be accessed by thousands of users at the same time.
+
+- **DBMS (Database Management System):** The software you actually interact with to store, retrieve, and manage data. Without a DBMS, a database is just raw data sitting on a disk.
+  - *Examples:* PostgreSQL, MySQL, MongoDB, SQLite.
+  - *Analogy:* The database is the library. The DBMS is the librarian who knows where every book is and can fetch it for you in seconds.
+- **Database System:** The full package — the data + the DBMS + the app using it together.
+
+---
+
+## 2. Databases vs. Traditional File Systems
+
+Before databases existed, developers stored data in plain text files or spreadsheets (CSV, Excel, `.txt` files). This works fine for a to-do list, but it falls apart fast when real applications need it.
+
+### The Problem with File Systems — A Real Example
+
+Imagine a hospital storing patient records in `.txt` files, one per department — `cardiology.txt`, `pharmacy.txt`, and `billing.txt`. Each file has the patient's name and phone number copied into it.
+
+Now the patient changes their phone number:
+- A staff member updates `cardiology.txt` ✅
+- But `pharmacy.txt` and `billing.txt` still have the old number ❌
+- Now three files disagree — which one is correct?
+
+A database would store the phone number **once** in a central location. All departments read from that single source. Change it once, and it's updated everywhere instantly.
+
+<Cards>
+  <Card title="Traditional File Systems (Problems)">
+    - **Data Redundancy:** The same data is copied across multiple files.
+      *Example: A customer's address saved in `orders.csv`, `shipping.csv`, and `invoices.csv` separately.*
+
+    - **Inconsistency:** Updating one file doesn't automatically update others.
+      *Example: Customer moves cities. Orders file updated, but the shipping file still has the old address.*
+
+    - **No Querying:** To find all orders over $500, you'd have to write a custom script to read each line of the file.
+      *A database does it in one line: `SELECT * FROM orders WHERE total > 500`*
+
+    - **Limited Security:** You can protect a whole file or folder, but not a single row.
+      *Example: You can't say "User A can see all rows but User B can only see rows they own."*
+
+    - **No Concurrency:** Two people saving the same file at once can corrupt or overwrite each other's changes.
+      *Example: Two cashiers updating the same `inventory.txt` file at the same time — one change gets lost.*
+  </Card>
+  <Card title="Database Management Systems (Solutions)">
+    - **Centralized Data:** One source of truth — no copies scattered around.
+      *Example: All departments read the patient record from a single database table.*
+
+    - **Data Integrity:** Rules (constraints) prevent bad data from being saved.
+      *Example: A `NOT NULL` constraint means you can never accidentally save a user without an email address.*
+
+    - **Powerful Querying:** Find anything instantly with SQL or a query API.
+      *Example: `SELECT * FROM users WHERE country = 'Bhutan' ORDER BY signup_date DESC`*
+
+    - **Granular Security:** Control access down to individual rows.
+      *Example: A user can only read their own `orders` rows, but an admin can see everyone's.*
+
+    - **High Concurrency:** Thousands of users can read and write simultaneously without conflicts.
+      *Example: Black Friday — millions of users checking out at the same time without any orders getting mixed up.*
+  </Card>
+</Cards>
+
+### ACID Properties (The Gold Standard for Reliability)
+
+ACID is a set of rules that guarantee your transactions are reliable, even if the server crashes mid-way. Relational databases like PostgreSQL and MySQL enforce all four.
+
+- **Atomicity — "All or Nothing"**
+  Every step in a transaction either all succeed, or all fail together. Nothing is left halfway.
+  > *Example: A bank transfer deducts Nu. 100 from Dorji and adds Nu. 100 to Penjor. If the server crashes after the deduction but before the addition, Atomicity rolls back the deduction. Dorji's money is safe.*
+
+- **Consistency — "Only Valid States"**
+  The database will only ever go from one valid state to another. Invalid data can never be committed.
+  > *Example: Your app has a rule that `account_balance` can never go below 0. Even if a bug tries to save -Nu. 50, the database will reject it.*
+
+- **Isolation — "Transactions Don't See Each Other Mid-Way"**
+  Two transactions happening at the same time don't interfere with each other. Each sees a consistent snapshot.
+  > *Example: Alice and Bob both try to buy the last concert ticket at the same time. Isolation ensures only one of them succeeds — the other gets an "out of stock" message.*
+
+- **Durability — "Saved Means Saved"**
+  Once a transaction is committed, it is permanently saved — even if the power goes out a millisecond later.
+  > *Example: You submit a payment form and get a success message. The server then crashes. When it restarts, your payment is still recorded.*
+
+---
+
+## 3. Database vs. File Storage (e.g., Amazon S3)
+
+"Object Storage" services like **Amazon S3**, **Cloudflare R2**, and **Google Cloud Storage** are often confused with databases. They both store data, but they're built for completely different jobs.
+
+### Think of it Like a Restaurant
+
+- The **menu and order system** = a **Database** (structured, queryable, updated constantly).
+- The **walk-in freezer** full of bulk ingredients = **Object Storage / S3** (large items, stored cheap, retrieved as-is).
+
+You wouldn't search for a specific customer's order inside a walk-in freezer — that makes no sense. Similarly, you wouldn't store a 4K video file inside a database.
+
+### Comparison
+
+| Feature | Database (SQL/NoSQL) | Object Storage (S3) |
+| :--- | :--- | :--- |
+| **What you store** | Rows, records, JSON documents | Raw files: images, videos, PDFs, backups |
+| **Example data** | User profile, order details, blog post | A profile photo, a product video, a PDF invoice |
+| **Updating data** | Update just one field instantly: `UPDATE users SET email = '...'` | Must download the full file, edit it, and re-upload it |
+| **Querying** | Run complex filters: `SELECT * FROM orders WHERE status = 'pending'` | Only fetch by exact file name/key; no filtering inside files |
+| **Cost at scale** | More expensive per GB (optimized for speed) | Very cheap per GB (optimized for bulk storage) |
+| **Performance** | Low latency — perfect for many small, fast reads/writes | High throughput — perfect for serving large files |
+
+### Real-World Example: A Social Media App
+
+When a user uploads a profile picture and writes a bio:
+- The **photo file** (3 MB JPEG) → stored in **S3**. A URL pointing to it is returned (e.g., `https://s3.amazonaws.com/bucket/user123.jpg`).
+- The **bio text**, **username**, and the **S3 URL** → stored in the **database** (fast to query, update, and search).
+
+When someone searches for a user, the app queries the database (fast). The database returns the S3 URL, and the browser fetches the image directly from S3 (cheap and scalable).
+
+### When NOT to Use S3 as a Database
+
+S3 is not a database. Don't use it for:
+- **Frequent small updates:** Want to update a user's "last login" timestamp? You'd have to download a whole JSON file, edit it, and re-upload it — extremely slow vs. a single `UPDATE` query.
+- **Filtering/Searching:** You can't ask S3 "find all users who signed up in March." It only retrieves files by their exact name.
+- **Transactional safety:** S3 has no ACID guarantees. If a write fails halfway, you won't know.
+
+<Callout type="info">
+**Rule of Thumb:** Store the **metadata** (user ID, filename, upload date) in your database. Store the **actual file** in S3. Link them with the S3 URL.
+</Callout>
+
+---
+
+## 4. SQL vs. NoSQL
+
+### A. SQL Databases (Relational / RDBMS)
+
+SQL databases store data in **tables**, like a very strict spreadsheet. Every table has a fixed set of columns, and every row must follow that structure.
+
+```
+┌─────────────────────────────────────────────────────┐
+│  users table                                        │
+├────┬──────────────┬──────────────────┬──────────────┤
+│ id │ name         │ email            │ country      │
+├────┼──────────────┼──────────────────┼──────────────┤
+│ 1  │ Tenzin       │ tenzin@mail.com  │ Bhutan       │
+│ 2  │ Sonam        │ sonam@mail.com   │ Bhutan       │
+└────┴──────────────┴──────────────────┴──────────────┘
+```
+
+- **Examples:** PostgreSQL, MySQL, Oracle, MS SQL Server, SQLite.
+- **Best For:** Financial systems, e-commerce, apps with complex relationships between data (users → orders → products).
+- **Strength:** ACID compliance means your data is always reliable and consistent.
+
+### B. NoSQL Databases (Non-Relational)
+
+NoSQL databases ditch the rigid table structure. You can store each "document" in a completely different shape — great for data that doesn't fit neatly into rows and columns.
+
+<Cards>
+  <Card title="Document Stores">
+    Stores data as JSON-like documents. Each document can have different fields.
+
+    *Example: A blog app. Post A has a `video` field, Post B has a `podcast_url` field. No problem!*
+
+    *Tools: **MongoDB**, CouchDB, Amazon DocumentDB*
+  </Card>
+  <Card title="Key-Value Stores">
+    Extremely fast. Every piece of data has a unique key, like a dictionary or a locker.
+
+    *Example: Storing user sessions. Key = `session_abc123`, Value = all the session data. Redis can look this up in microseconds.*
+
+    *Tools: **Redis**, DynamoDB, Memcached*
+  </Card>
+  <Card title="Wide-Column Stores">
+    Like a spreadsheet where each row can have different columns. Built for massive scale analytics.
+
+    *Example: IoT sensors sending billions of temperature readings per day. Cassandra can handle the write load.*
+
+    *Tools: **Cassandra**, ScyllaDB, HBase*
+  </Card>
+  <Card title="Graph Databases">
+    Stores data as **nodes** (things) and **edges** (relationships). Ideal when the connections between data matter as much as the data itself.
+
+    *Example: Social network — "Friends of friends who also like hiking." Trivial for a graph DB, nearly impossible for SQL.*
+
+    *Tools: **Neo4j**, Amazon Neptune, ArangoDB*
+  </Card>
+</Cards>
+
+### C. Emerging Types
+
+- **Vector Databases:** Store data as high-dimensional vectors (lists of numbers that represent meaning). Used in AI to find semantically similar content.
+  > *Example: You search "cozy winter drink" in an e-commerce app. A vector DB finds "hot chocolate" and "mulled wine" — even though you didn't use those exact words.*
+  > *Tools: Pinecone, Milvus, Weaviate, Qdrant*
+
+- **Time-Series Databases:** Optimized for data that is always attached to a timestamp, stored and queried in chronological order.
+  > *Example: Server monitoring — recording CPU usage every second. TimescaleDB can instantly show you the average CPU for every hour of last month.*
+  > *Tools: InfluxDB, TimescaleDB*
+
+---
+
+## 5. Database Providers & DBaaS
+
+Setting up and maintaining your own database server is complex — you have to handle backups, scaling, security patches, and uptime. **Database-as-a-Service (DBaaS)** means a cloud provider handles all of that for you.
+
+*Analogy: DBaaS is like renting an apartment instead of building and maintaining a house yourself.*
+
+- **The Big Three Cloud Providers:**
+  - **AWS:** RDS (Managed SQL), Aurora (High-performance SQL), DynamoDB (NoSQL).
+  - **Google Cloud:** Cloud SQL (MySQL/PostgreSQL), Firestore (NoSQL document).
+  - **Microsoft Azure:** Azure SQL, Cosmos DB (Multi-model NoSQL).
+
+- **Modern Serverless & Specialized Platforms:**
+  - **Supabase:** Postgres with Auth and Storage built-in — great for full-stack apps.
+  - **Neon:** Serverless Postgres. You can "branch" your database like a Git branch — perfect for testing schema changes without touching production.
+  - **PlanetScale:** Serverless MySQL built for massive scale, with zero-downtime schema migrations.
+  - **MongoDB Atlas:** Fully-managed MongoDB in the cloud.
+  - **Snowflake:** A massive cloud *data warehouse* — not for live app data, but for analytics and business intelligence over huge datasets.
+
+---
+
+## 6. How to Integrate Databases
+
+Databases almost never talk directly to a browser or mobile app for security reasons. The standard architecture is:
+
+```
+Frontend (Browser/App)  →  API (Backend Server)  →  Database
+```
+
+If the frontend accessed the database directly, your database password would be visible in the browser's source code — a massive security hole.
+
+### Backend Integration
+
+Your backend server connects to the database using one of these approaches:
+
+- **Native Drivers:** The lowest level. You write raw SQL strings in your code.
+  - *Example: Using the `pg` library in Node.js to send a raw `SELECT * FROM users` query to Postgres.*
+  - *Risk: Easy to accidentally introduce SQL injection bugs if you're not careful.*
+
+- **Query Builders:** A step up. You write queries using code methods instead of plain strings — safer and easier.
+  - *Example: `knex('users').where('country', 'Bhutan').orderBy('name')` instead of writing raw SQL.*
+  - *Tool: **Knex.js***
+
+- **ORMs / ODMs (Object-Relational/Document Mappers):** The highest level of abstraction. Your database tables become code objects (classes), and you interact with them using regular method calls — no SQL at all.
+  - *Example with Prisma:* `await prisma.user.findMany({ where: { country: 'Bhutan' } })` — no SQL written, but Prisma generates it under the hood.
+  - *JS/TS ORMs:* **Prisma**, TypeORM, Sequelize, Mongoose (ODM for MongoDB).
+  - *Python:* **SQLAlchemy**, Django ORM.
+
+### Frontend Integration (The Exception)
+
+Platforms like **Firebase** and **Supabase** let frontends talk directly to the database — but safely, using **Row Level Security (RLS)**.
+
+> *Example with Supabase RLS:* A rule says "a user can only read rows from the `orders` table where `user_id = their own ID`." Even if a hacker tries to fetch all orders, the database itself blocks it — not just your app code.
+
+---
+
+## Common Use Cases
+
+- **E-commerce:** User accounts, product catalogs (SQL), shopping carts in Redis (Key-Value), and order histories.
+- **Social Media:** User profiles & posts (SQL/Document), friendships & recommendations (Graph DB).
+- **Finance:** Bank accounts, ledgers, and transactions (SQL for strict ACID compliance).
+- **Streaming (Netflix/Spotify):** Movie/song metadata (SQL), watch/listen history (NoSQL at massive scale), personalization (Vector DBs for recommendations).
+- **Healthcare:** Patient records and appointment scheduling (SQL for compliance and integrity).
+
+---
+
+## Key Takeaways
+<Callout type="info">
+- **Database vs. File System:** A database is centralized, queryable, and handles concurrency. A plain file is none of those things at scale.
+- **Database vs. S3:** Use a DB for structured, queryable data (user records). Use S3 for bulk files (photos, videos) — and store just the S3 URL in your DB.
+- **SQL vs. NoSQL:** SQL for strict structure and reliability; NoSQL for flexibility, speed, and massive horizontal scale.
+- **ORMs like Prisma** let you interact with a database using code instead of raw SQL — faster to build, safer by default.
+</Callout>
