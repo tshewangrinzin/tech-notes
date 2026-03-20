@@ -2,6 +2,7 @@ import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
 import defaultMdxComponents from "fumadocs-ui/mdx";
 import type { ElementContent, Root, RootContent } from "hast";
 import { toJsxRuntime } from "hast-util-to-jsx-runtime";
+import Link from "next/link";
 import {
   Children,
   type ComponentProps,
@@ -54,6 +55,38 @@ export function rehypeWrapWords() {
   };
 }
 
+/**
+ * Renders all markdown links as proper clickable anchors.
+ * - Internal paths (starting with /) → Next.js <Link> for SPA navigation.
+ * - External URLs → plain <a> that opens in a new tab.
+ */
+function MDLink({ href, children, ...props }: ComponentProps<"a">) {
+  const isInternal = typeof href === "string" && href.startsWith("/");
+
+  if (isInternal) {
+    return (
+      <Link
+        href={href}
+        className="text-fd-primary underline underline-offset-4 hover:opacity-80 transition-opacity"
+      >
+        {children}
+      </Link>
+    );
+  }
+
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-fd-primary underline underline-offset-4 hover:opacity-80 transition-opacity"
+      {...props}
+    >
+      {children}
+    </a>
+  );
+}
+
 function createProcessor(): Processor {
   const processor = remark()
     .use(remarkGfm)
@@ -74,6 +107,7 @@ function createProcessor(): Processor {
           ...defaultMdxComponents,
           pre: Pre,
           img: undefined, // use JSX
+          a: MDLink,
         },
       });
     },
