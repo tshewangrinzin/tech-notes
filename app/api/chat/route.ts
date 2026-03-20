@@ -4,11 +4,28 @@ import { Document, type DocumentData } from "flexsearch";
 import { z } from "zod";
 import { source } from "@/lib/source";
 
+interface DocSection {
+  title: string;
+  url: string; // page url + anchor, e.g. /docs/database#sql-vs-nosql
+}
+
+// CustomDocument stored in FlexSearch — sections must be kept separate
+// because DocumentData's index signature only allows scalar DocumentValue types
 interface CustomDocument extends DocumentData {
   url: string;
   title: string;
   description: string;
   content: string;
+}
+
+// EnrichedDocument is a plain interface (not extending DocumentData) so that
+// sections: DocSection[] doesn't conflict with the DocumentData index signature
+interface EnrichedDocument {
+  url: string;
+  title: string;
+  description: string;
+  content: string;
+  sections: DocSection[];
 }
 
 const ToolOutputSchema = z.array(
@@ -17,8 +34,10 @@ const ToolOutputSchema = z.array(
     title: z.string(),
     description: z.string(),
     content: z.string(),
+    sections: z.array(z.object({ title: z.string(), url: z.string() })).default([]),
   }),
 );
+
 
 function getRequiredEnv(name: "OPENROUTER_API_KEY"): string {
   const value = process.env[name]?.trim();
@@ -57,29 +76,49 @@ async function createSearchServer() {
     },
   });
 
+  // Store sections separately since DocSection[] can't go inside FlexSearch DocumentData
+  const sectionsMap = new Map<string, DocSection[]>();
+
   try {
     const docs = await chunkedAll(
       source.getPages().map(async (page) => {
         if (!("getText" in page.data)) return null;
+
+        // Build section links from the page's table of contents
+        const toc: Array<{ url: string; title: unknown }> = Array.isArray(page.data.toc)
+          ? (page.data.toc as Array<{ url: string; title: unknown }>)
+          : [];
+        const sections: DocSection[] = toc
+          .filter((item) => typeof item.url === "string" && item.url.startsWith("#"))
+          .map((item) => ({
+            title: typeof item.title === "string" ? item.title : String(item.title ?? ""),
+            url: `${page.url}${item.url}`,
+          }));
 
         return {
           title: page.data.title,
           description: page.data.description,
           url: page.url,
           content: await page.data.getText("processed"),
-        } as CustomDocument;
+          sections,
+        };
       }),
     );
 
     for (const doc of docs) {
-      if (doc) search.add(doc);
+      if (doc) {
+        const { sections, ...docWithoutSections } = doc;
+        sectionsMap.set(doc.url, sections);
+        search.add(docWithoutSections as CustomDocument);
+      }
     }
   } catch (error) {
     console.error("[chat] failed to initialize docs search index", error);
   }
 
-  return search;
+  return { search, sectionsMap };
 }
+
 
 async function chunkedAll<O>(promises: Promise<O>[]): Promise<O[]> {
   const SIZE = 50;
@@ -100,7 +139,10 @@ const baseSystemPrompt = [
   "Give direct, concise, practical answers with clear markdown sections and short bullet points when useful.",
   "Do not expose chain-of-thought or thinking process in the visible response. Keep reasoning internal.",
   "Use the provided documentation context as the primary source of truth when it is relevant to the question.",
-  "Cite documentation sources as markdown links using the provided `url` field when available.",
+  "Always cite your sources as clickable markdown links. Prefer linking to the most specific section possible:",
+  "  - If a doc section (from the `sections` list) directly covers the topic, use that section's URL (e.g. [SQL vs NoSQL](/docs/database#sql-vs-nosql)).",
+  "  - Otherwise fall back to the page URL (e.g. [Database](/docs/database)).",
+  "  - Never invent URLs — only use `url` and `sections[].url` values from the provided context.",
   "If documentation context does not contain the answer, clearly say what is missing and suggest a better search query.",
 ].join("\n");
 
@@ -246,29 +288,42 @@ function snippet(text: string, max = 1200): string {
 async function getDocsContextForQuery(
   query: string,
   limit = 4,
-): Promise<CustomDocument[]> {
+): Promise<EnrichedDocument[]> {
   if (query.trim().length === 0) return [];
 
-  const search = await searchServer;
+  const { search, sectionsMap } = await searchServer;
   const raw = await search.searchAsync(query, {
     limit,
     merge: true,
     enrich: true,
   });
   const normalized = normalizeSearchResults(raw);
-  return normalized.slice(0, limit);
+  return normalized.slice(0, limit).map((doc) => ({
+    ...doc,
+    sections: sectionsMap.get(doc.url) ?? [],
+  }));
 }
 
-function buildDocsContext(docs: CustomDocument[]): string {
+
+function buildDocsContext(docs: EnrichedDocument[]): string {
   if (docs.length === 0) return docsContextFallback;
 
   const lines = docs.map((doc, index) => {
+    const sectionLines =
+      doc.sections.length > 0
+        ? `   sections:\n${doc.sections
+            .map((s: DocSection) => `     - [${s.title}](${s.url})`)
+            .join("\n")}`
+        : "";
     return [
       `${index + 1}. title: ${doc.title}`,
       `   url: ${doc.url}`,
       `   description: ${doc.description}`,
-      `   excerpt: ${snippet(doc.content)}`,
-    ].join("\n");
+      `   excerpt: ${snippet(doc.content as string)}`,
+      sectionLines,
+    ]
+      .filter(Boolean)
+      .join("\n");
   });
 
   return ["Relevant documentation context for this question:", ...lines].join(
@@ -402,7 +457,7 @@ const searchTool = tool({
     limit: z.number().int().min(1).max(100).default(10),
   }),
   async execute({ query, limit }) {
-    const search = await searchServer;
+    const { search } = await searchServer;
     const raw = await search.searchAsync(query, {
       limit,
       merge: true,
