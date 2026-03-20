@@ -146,13 +146,6 @@ const baseSystemPrompt = [
   "If documentation context does not contain the answer, clearly say what is missing and suggest a better search query.",
 ].join("\n");
 
-const firstTurnPrompt = [
-  "This is the first turn of a new chat session.",
-  "Start with a brief, friendly greeting, then explain in one short sentence that you answer using the project documentation.",
-  "Your role: documentation assistant for this website.",
-  "Your jobs: answer accurately, stay grounded in docs, and provide clear next steps when helpful.",
-  "Keep the greeting short and only do this first-turn intro for new chats.",
-].join("\n");
 
 const docsContextFallback =
   "No relevant documentation snippets were found for this question. If unsure, state that and suggest a more specific query.";
@@ -373,15 +366,10 @@ export async function POST(req: Request) {
       ? reqJson.messages
       : [];
     const history = toModelHistory(incomingMessages);
-    const firstTurn = isFirstTurn(history);
     const latestUserText = getLatestUserText(history);
     const docs = await getDocsContextForQuery(latestUserText);
     const docsContext = buildDocsContext(docs);
-    const systemPrompt = [
-      baseSystemPrompt,
-      firstTurn ? firstTurnPrompt : "",
-      docsContext,
-    ]
+    const systemPrompt = [baseSystemPrompt, docsContext]
       .filter(Boolean)
       .join("\n\n");
     const modelMessages = buildModelMessages(history);
