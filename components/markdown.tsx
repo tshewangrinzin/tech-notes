@@ -22,10 +22,27 @@ export interface Processor {
   process: (content: string) => Promise<ReactNode>;
 }
 
+// HTML elements that cannot have <span> children — wrapping text inside
+// these with <span> causes a hydration error.
+const SKIP_TAGS = new Set([
+  "pre",
+  "table",
+  "thead",
+  "tbody",
+  "tfoot",
+  "tr",
+  "td",
+  "th",
+]);
+
 export function rehypeWrapWords() {
   return (tree: Root) => {
     visit(tree, ["text", "element"], (node, index, parent) => {
-      if (node.type === "element" && node.tagName === "pre") return "skip";
+      if (
+        node.type === "element" &&
+        SKIP_TAGS.has(node.tagName)
+      )
+        return "skip";
       if (node.type !== "text" || !parent || index === undefined) return;
 
       const words: string[] = node.value.split(/(?=\s)/);
